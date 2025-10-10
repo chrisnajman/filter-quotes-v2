@@ -1,0 +1,121 @@
+.quotes-container {
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: var(--el-bg);
+
+    & .fail {
+        width: fit-content;
+        margin-inline: auto;
+        margin-block-end: 2rem;
+        border: 0.1875rem solid var(--warning);
+        background-color: var(--body-fg);
+        color: var(--el-bg);
+        padding: 1em 1.5em;
+        border-radius: 0.75rem;
+
+        &:empty {
+            display: none;
+        }
+    }
+
+    & ul {
+        padding: 0;
+        list-style-type: "";
+    }
+
+    & .tags {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+
+        &.hide {
+            display: none;
+        }
+
+        & ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
+    & q {
+        font-family: Georgia, serif;
+        font-size: clamp(1.25rem, 1.1495rem + 0.4673vw, 1.5rem);
+    }
+
+    button {
+        all: unset;
+        cursor: pointer;
+        font-size: inherit;
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #ccc;
+        }
+
+        &:focus-visible {
+            outline: 0.125rem solid orange;
+            outline-offset: 0.1875rem;
+        }
+    }
+
+    & .quote {
+        border-block-end: 0.0625rem dotted currentColor;
+        padding-block: 1em;
+
+        &:last-child {
+            border-block-end: none;
+        }
+
+        & .pre-quote:empty,
+        & .post-quote:empty {
+            display: none;
+        }
+
+        & .pre-quote::after {
+            content: " ";
+        }
+        & .post-quote::before {
+            content: " ";
+        }
+
+        & .info {
+            font-weight: 600;
+        }
+
+        & button {
+            color: var(--accent-colour);
+            padding: 0.125rem;
+            font-weight: 400;
+            border-block-end: 0.0625rem solid transparent;
+
+            &:hover,
+            &.active {
+                border-block-end-color: var(--accent-colour);
+            }
+
+            &::after {
+                content: ",";
+            }
+
+            &:last-of-type::after {
+                content: "";
+            }
+        }
+    }
+
+    & .btn-clear-filters {
+        border: 0.125rem solid currentColor;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 100vw;
+        display: block;
+        margin-inline: auto;
+
+        &.active {
+            background-color: var(--accent-colour);
+            color: var(--body-bg);
+        }
+    }
+}

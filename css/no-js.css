@@ -1,0 +1,21 @@
+.no-js {
+    & .theme-toggler,
+    & .details-container,
+    & .quotes-container .btn-clear-filters,
+    & .loader,
+    & .loader::after {
+        display: none;
+    }
+}
+
+noscript p {
+    width: fit-content;
+    margin-inline: auto;
+    border: 0.1875rem solid var(--warning);
+    background-color: var(--body-fg);
+    color: var(--el-bg);
+    padding: 1em 1.5em;
+    border-radius: 0.75rem;
+    text-align: center;
+    text-wrap: balance;
+}

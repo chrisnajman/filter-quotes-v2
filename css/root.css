@@ -1,0 +1,30 @@
+:root {
+    overflow-y: scroll;
+    color-scheme: light dark;
+    --animation-timing: 250ms;
+    --bold: 600;
+    --border-radius: 1.25rem;
+    --shadow-colour: rgba(0, 0, 0, 0.2);
+    --shadow-right-bottom: 0.25rem 0.25rem 0.5rem var(--shadow-colour);
+    --trim: trim-both cap alphabetic;
+    --warning: red;
+
+    /* light mode (default) */
+    --accent-neutral: #e4e4e4;
+    --body-bg: var(--accent-neutral);
+    --body-fg: #000;
+    --el-bg: #fff;
+    --accent-colour: blue;
+    --shadow-top: 0 -0.25rem 0.375rem var(--shadow-colour);
+    --shadow-bottom: 0 0.25rem 0.375rem var(--shadow-colour);
+}
+
+.darkmode {
+    --accent-neutral: #4d4c4c;
+    --body-bg: var(--accent-neutral);
+    --body-fg: #fff;
+    --el-bg: #000;
+    --accent-colour: aqua;
+    --shadow-top: none;
+    --shadow-bottom: none;
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "prequote": "",
+    "quote": "He taught us the gods wore watch chains.",
+    "postquote": "(The author, speaking of Gustave Moreau.)",
+    "author": "Degas",
+    "tags": ["Gustave Moreau", "Art"]
+  },
+  {
+    "prequote": "Karl Popper accused Wittgenstein of",
+    "quote": "being a man eternally polishing his spectacles without ever looking through them.",
+    "postquote": "",
+    "author": "Popper",
+    "tags": ["Wittgenstein", "Philosophy"]
+  },
+  {
+    "prequote": "The breakthrough came when an acting teacher, Jack Kosslyn, delivered a precept that Eastwood often quoted:",
+    "quote": "Don't just do something; stand there!",
+    "postquote": "",
+    "author": "Jack Kosslyn",
+    "tags": ["Clint Eastwood", "Acting", "Film"]
+  },
+  {
+    "prequote": "",
+    "quote": "There is no reason why the truth when found should be interesting.",
+    "postquote": "",
+    "author": "Bertrand Russell",
+    "tags": ["Truth", "Reason", "Philosophy"]
+  },
+  {
+    "prequote": "",
+    "quote": "The sleep of reason brings forth monsters.",
+    "postquote": "(Inscription on an etching by Goya.)",
+    "author": "Goya",
+    "tags": ["Art", "Reason", "Monsters"]
+  },
+  {
+    "prequote": "",
+    "quote": "Virtue resides in the taming of a baser instinct, not in its elimination.",
+    "postquote": "",
+    "author": "Clive James",
+    "tags": ["Virtue", "Instinct"]
+  },
+  {
+    "prequote": "",
+    "quote": "Science is what we know, and philosophy is what we don't know.",
+    "postquote": "",
+    "author": "Bertrand Russell",
+    "tags": ["Philosophy", "Science"]
+  },
+  {
+    "prequote": "",
+    "quote": "Beauty is the promise of happiness.",
+    "postquote": "",
+    "author": "Stendhal",
+    "tags": ["Beauty", "Happiness"]
+  },
+  {
+    "prequote": "",
+    "quote": "Whoever fights monsters should see to it that in the process he does not become a monster.",
+    "postquote": "",
+    "author": "Nietzsche",
+    "tags": ["Philosophy", "Monsters"]
+  },
+  {
+    "prequote": "",
+    "quote": "Painting is easy when you don't know how, but very difficult when you do.",
+    "postquote": "",
+    "author": "Degas",
+    "tags": ["Art", "Painting", "Difficulty"]
+  },
+  {
+    "prequote": "",
+    "quote": "People say that life's the thing, but I prefer reading.",
+    "postquote": "",
+    "author": "Logan Pearsall Smith",
+    "tags": ["Reading", "Life"]
+  },
+  {
+    "prequote": "",
+    "quote": "Hypocrisy is the tribute that vice pays to virtue.",
+    "postquote": "",
+    "author": "La Rochefoucauld",
+    "tags": ["Hypocrisy", "Vice", "Virtue"]
+  },
+  {
+    "prequote": "",
+    "quote": "Don't let the old man in.",
+    "postquote": "",
+    "author": "Clint Eastwood",
+    "tags": ["Old age"]
+  },
+  {
+    "prequote": "",
+    "quote": "A writer is someone for whom writing is more difficult than it is for other people.",
+    "postquote": "",
+    "author": "Thomas Mann",
+    "tags": ["Writing", "Difficulty"]
+  }
+]

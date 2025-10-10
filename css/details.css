@@ -1,0 +1,55 @@
+.details-container {
+    width: 100%;
+    margin-inline: auto;
+
+    & > li {
+        margin-block-end: 0.125rem;
+
+        &:last-of-type {
+            margin: 0;
+        }
+    }
+
+    & ul {
+        list-style-type: disc;
+        padding: 1.5rem 2em;
+        background-color: var(--el-bg);
+        border-radius: 1rem;
+    }
+
+    & li {
+        text-wrap: pretty;
+    }
+
+    & :focus-visible {
+        outline-offset: -0.125rem;
+    }
+}
+
+details {
+    & summary {
+        cursor: pointer;
+        white-space: nowrap;
+        padding-block-end: 0.5em;
+    }
+}
+
+@media screen and (prefers-reduced-motion: no-preference) {
+    ::details-content {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+        transition:
+            opacity var(--animation-timing) ease,
+            transform var(--animation-timing) ease;
+        will-change: opacity, transform;
+    }
+
+    [open]::details-content {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* [open]::details-content {
+    background-color: var(--el-bg);
+} */
