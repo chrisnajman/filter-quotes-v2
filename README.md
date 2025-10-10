@@ -203,7 +203,7 @@ The JavaScript has been split into separate modules, improving code modularity:
 
 ### No JS
 
-If JavaScript is disabled, a warning message is displayed and the loader animation, theme-toggler, mobile menu and filtering cease to function. However, all content remains accessible.
+If JavaScript is disabled, a warning message is displayed and the loader animation, theme-toggler, quotes display and filtering cease to function.
 
 [Back to menu](#menu)
 
