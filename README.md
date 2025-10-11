@@ -31,7 +31,7 @@ A lightweight web app for browsing and filtering a collection of quotes by autho
 ### Filtering Quotes
 
 - Displays a list of quotes, each containing one or more filter buttons (e.g. author names or tags).
-- Clicking a filter button shows only the quotes that include that author or tag.
+- Clicking an **active** filter button shows only the quotes that include that author or tag.
 - The active filter is visually highlighted across all matching buttons.
 - A "Clear filters" button resets the list to show all quotes.
 
@@ -168,6 +168,7 @@ The JavaScript has been split into separate modules, improving code modularity:
     - Displays "Unknown" when the author field is empty.
     - Hides the tags section if no tags exist.
   - Dynamically creates `<button>` elements for each tag and appends them to the appropriate quote.
+  - If there is only one instance of an **author** or **tag**, the `disabled` attribute is attached to the `<button>`.
   - Outputs a message to the user (`#fail`) if data fails to load or the fetch request encounters an error.
   - Completes rendering before the filtering logic (`quotesButtons.js`) is executed.
 - `quotes-buttons.js`: Controls the interactive filtering behavior for the quotes list:

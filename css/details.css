@@ -15,6 +15,11 @@
         padding: 1.5rem 2em;
         background-color: var(--el-bg);
         border-radius: 1rem;
+
+        & ul {
+            padding-block: 0;
+            padding-inline-start: 1.5rem;
+        }
     }
 
     & li {

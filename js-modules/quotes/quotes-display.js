@@ -43,6 +43,24 @@ export default async function quotesDisplay() {
 
         quotesList.append(quoteContainer)
       })
+
+      // After all quotes have been appended, count button occurrences
+      const allButtons = document.querySelectorAll(".quote button")
+      const counts = {}
+
+      // Count occurrences of each button label
+      allButtons.forEach((btn) => {
+        const label = btn.textContent.trim()
+        counts[label] = (counts[label] || 0) + 1
+      })
+
+      // Disable buttons that appear only once
+      allButtons.forEach((btn) => {
+        const label = btn.textContent.trim()
+        if (counts[label] === 1) {
+          btn.setAttribute("disabled", "")
+        }
+      })
     } else {
       fail.textContent = "Something went wrong. Please try again later..."
     }
