@@ -187,6 +187,11 @@ code {
     & h1 + p {
         margin-inline: auto;
     }
+
+    &:focus-visible {
+        outline-offset: 0;
+        margin-block-start: 1rem;
+    }
 }
 
 .skip-link {
