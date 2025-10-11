@@ -40,15 +40,6 @@ A lightweight web app for browsing and filtering a collection of quotes by autho
 - Keyboard support: pressing `Escape` closes the currently focused `<details>`.
 - ARIA attributes (`aria-expanded`) synchronized with open/close state.
 
-### CSS - Optional Fixed Header
-
-The page has a fixed `<header>`. This means it will always remain on top when scrolling.
-
-To disable it:
-
-- Comment out `@import "./css/fixed-header.css";` in `style.css` and
-- delete `./css/fixed-header.css`.
-
 [Back to menu](#menu)
 
 ---
