@@ -2,7 +2,7 @@ export default function quotesButtons() {
   // Cache references to important elements
   const clearFilters = document.getElementById("clear-filters")
   const lis = document.querySelectorAll(".quote")
-  const buttons = document.querySelectorAll(".quote button")
+  const buttons = document.querySelectorAll(".quote button, .tag-cloud button")
 
   // Track the currently active filter (null = no filter)
   let activeFilter = null
@@ -32,12 +32,10 @@ export default function quotesButtons() {
   })
 
   /* ****************************************** */
+
   function filterInactive() {
     // Show all list items
     lis.forEach((li) => li.removeAttribute("hidden"))
-
-    // Remove active styles from all filter buttons
-    buttons.forEach((btn) => btn.classList.remove("active"))
 
     // Remove "active" styling from the clear button
     clearFilters.classList.remove("active")
