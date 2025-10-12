@@ -37,6 +37,9 @@ export default function quotesButtons() {
     // Show all list items
     lis.forEach((li) => li.removeAttribute("hidden"))
 
+    // Remove active styles from all filter buttons
+    buttons.forEach((btn) => btn.classList.remove("active"))
+
     // Remove "active" styling from the clear button
     clearFilters.classList.remove("active")
 
