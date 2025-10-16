@@ -4,15 +4,21 @@ export default function pageHeaderResizeObserver() {
 
   const pageHeaderObserver = new ResizeObserver((entries) => {
     for (const entry of entries) {
-      const styles = getComputedStyle(entry.target)
-      const paddingBlockStart = parseFloat(styles.paddingBlockStart)
-      const paddingBlockEnd = parseFloat(styles.paddingBlockEnd)
+      // Header’s computed styles for padding
+      const headerStyles = getComputedStyle(entry.target)
+
+      // Root’s computed styles for the skip-link gap variable
+      const rootStyles = getComputedStyle(root)
+
+      const paddingBlockStart = parseFloat(headerStyles.paddingBlockStart)
+      const paddingBlockEnd = parseFloat(headerStyles.paddingBlockEnd)
       const entryTopBotPadding = paddingBlockStart + paddingBlockEnd
 
-      // Extra space below sticky header for skip-link targets
-      const skipLinkVisualGap = 64 // px
+      // Extra breathing room from CSS variable (default: 0 if missing)
+      const skipLinkGap =
+        parseFloat(rootStyles.getPropertyValue("--skip-link-gap")) || 0
 
-      const customAdjustment = entryTopBotPadding + skipLinkVisualGap
+      const customAdjustment = entryTopBotPadding + skipLinkGap
 
       const pageHeaderHeightRems =
         (entry.contentRect.height + customAdjustment) / 16

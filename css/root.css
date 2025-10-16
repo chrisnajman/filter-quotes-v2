@@ -1,4 +1,5 @@
 :root {
+    --skip-link-gap: 4rem;
     overflow-y: scroll;
     color-scheme: light dark;
     --animation-timing: 250ms;

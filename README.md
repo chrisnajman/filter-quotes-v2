@@ -190,7 +190,7 @@ The JavaScript has been split into separate modules, improving code modularity:
 
 ### Other
 
-- `page-header-resize-observer.js`: Observes the `.header` element and updates the root's `scroll-padding-top` in response to size changes, ensuring skip links and anchor targets scroll into view with proper spacing below a fixed or sticky header.
+- `page-header-resize-observer.js`: Observes the `.header` element and updates the root’s `scroll-padding-top` based on header size and the `--skip-link-gap` CSS variable (in `base.css`), ensuring skip links and anchor targets scroll into view with proper spacing below a fixed or sticky header.
 - `loader.js`: See [Loader Git repository](https://github.com/chrisnajman/loader)
 - `theme.js`: Handles theme toggling (light/dark mode) and local storage management.
 
