@@ -1,4 +1,4 @@
-# Filter Quotes V.2
+# Filter Quotations
 
 <details>
   <summary><strong id="menu">Menu</strong></summary>
@@ -18,9 +18,11 @@
 
 ## Description
 
-A lightweight web app for browsing and filtering a collection of quotes by author or tag. Built with semantic HTML and modern vanilla JavaScript, it uses a JSON data source and an HTML `<template>` to generate the quote list dynamically, with a focus on accessibility and clear structure.
+A lightweight web app for browsing and filtering a collection of quotations by author or tag. Built with semantic HTML and modern vanilla JavaScript, it uses a JSON data source and an HTML `<template>` to generate the quotation list dynamically, with a focus on accessibility and clear structure.
 
-[View on GitHub Pages](https://chrisnajman.github.io/filter-quotes-v2)
+Longer entries are rendered as `<blockquote>` elements, while shorter ones use inline `<q>` tags for natural quotation formatting.
+
+[View on GitHub Pages](https://chrisnajman.github.io/filter-quotations-v2)
 
 [Back to menu](#menu)
 
@@ -28,12 +30,18 @@ A lightweight web app for browsing and filtering a collection of quotes by autho
 
 ## Features
 
-### Filtering Quotes
+### Filtering quotations
 
-- Displays a list of quotes, each containing one or more filter buttons (e.g. author names or tags).
-- Clicking an **active** filter button shows only the quotes that include that author or tag.
+- Displays a list of quotations, each containing one or more filter buttons (e.g. author names or tags).
+- Clicking an **active** filter button shows only the quotations that include that author or tag.
 - The active filter is visually highlighted across all matching buttons.
-- A "Clear filters" button resets the list to show all quotes.
+- A "Clear filters" button resets the list to show all quotations.
+
+### Conditional rendering
+
+- Quotations of **25 words or fewer** are displayed using a `<q>` element (inline quotations).
+- Quotations **over 25 words** are displayed using a `<blockquote>` element (block-level quotations).
+- This enhances readability while maintaining semantic meaning.
 
 ### Details dropdown
 
@@ -58,7 +66,7 @@ The structure of a JSON entry is as follows:
 }
 ```
 
-To create your own quotes list, open `./json/quotes.json`, remove the existing entries, and add your own, using the template above as a model.
+To create your own quotations list, open `./json/quotes.json`, remove the existing entries, and add your own, using the template above as a model.
 
 Don't forget to separate entries with a comma, i.e.
 
@@ -91,7 +99,7 @@ Don't forget to separate entries with a comma, i.e.
 ### Notes
 
 - The last entry in a JSON file is **not** followed by a comma.
-- Both **prequote** and **postquote** are optional. They can be used to supply a preamble or a postamble (real word!) to the quote. If either are not required, leave the field value as `""` and the corresponding HTML will be hidden.
+- Both **prequote** and **postquote** are optional. They can be used to supply a preamble or a postamble (real word!) to the quotation. If either are not required, leave the field value as `""` and the corresponding HTML will be hidden.
 - If the **author** is unknown, leave the field value as `""`: a button with a label of "Unknown" will be created.
 - You can create as many **tags** as you like. If you don't want any, leave the field value as an empty array (`[]`) and the entire list item will be hidden.
 
@@ -103,23 +111,14 @@ Don't forget to separate entries with a comma, i.e.
 
 The JSON entries are inserted into an HTML `<template>` via `quotes-display.js`.
 
-The `<template>` element provides a reusable structure for each quote, allowing the script to clone and populate it with data from the JSON file without repeating markup in the HTML.
+The `<template>` element provides a reusable structure for each quotation, allowing the script to clone and populate it with data from the JSON file without repeating markup in the HTML.
 
 ```html
 <template id="quote-template">
   <li class="quote-container quote flow">
-    <h3><span data-title></span> &#8230;</h3>
-    <p class="quote-text">
-      <span
-        data-prequote
-        class="pre-quote"
-      ></span>
-      <q data-quote></q>
-      <span
-        data-postquote
-        class="post-quote"
-      ></span>
-    </p>
+    <!-- Begin Quotations output -->
+    <div class="text-container"></div>
+    <!-- End Quotations output -->
     <ul>
       <li>
         <span class="info">Author:</span>
@@ -158,40 +157,54 @@ Built with **vanilla ES6 JavaScript**, focusing on modern syntax and browser API
 The JavaScript has been split into separate modules, improving code modularity:
 
 - `index.js`: Initializes the app using an asynchronous `init()` function.
-  - The function first **awaits `quotesDisplay()`**, which fetches the JSON file and renders the quotes dynamically from the `<template>`.
-  - Only after that process completes does it call `quotesButtons()`, ensuring that all quote elements and filter buttons exist in the DOM before event listeners are attached.
+
+  - The function first **awaits `quotesDisplay()`**, which fetches the JSON file and renders the quotations dynamically from the `<template>`.
+  - Only after that process completes does it call `quotesButtons()`, ensuring that all quotation elements and filter buttons exist in the DOM before event listeners are attached.
   - This sequence guarantees that filtering behavior is safely applied to dynamically generated content.
-- `quotes-display.js`: Handles fetching and displaying quotes from an external JSON file using the Fetch API.
+
+- `quotes-display.js`: Handles fetching and displaying quotations from an external JSON file using the Fetch API.
+
   - Retrieves `quotes.json` asynchronously and checks for a successful response.
-  - Clones the HTML `<template>` for each quote, filling in title, quote text, author, and tags.
+  - Clones the HTML `<template>` for each quotation, filling in quotation text, author, and tags.
+  - Depending on word count (determined via `word-count.js`), inserts the text into either a `<q>` or `<blockquote>` element.
   - Gracefully handles missing data:
     - Displays "Unknown" when the author field is empty.
     - Hides the tags section if no tags exist.
-  - Dynamically creates `<button>` elements for each tag and appends them to the appropriate quote.
-  - If there is only one instance of an **author** or **tag**, the `disabled` attribute is attached to the `<button>`.
+  - Dynamically creates `<button>` elements for each tag and appends them to the appropriate quotation.
+  - If there is only one instance of an **author** or **tag**, the `disabled` attribute is attached to its `<button>`.
   - Outputs a message to the user (`#fail`) if data fails to load or the fetch request encounters an error.
-  - Completes rendering before the filtering logic (`quotesButtons.js`) is executed.
-- `quotes-buttons.js`: Controls the interactive filtering behavior for the quotes list:
-  - Selects and caches key DOM elements: the list items (.quote), each quote’s filter buttons, and the "Clear filters" button.
+  - Completes rendering before the filtering logic (`quotes-buttons.js`) is executed.
+
+- `word-count.js`: Counts the number of words in a given string.
+
+  - Exports a simple function that trims whitespace and splits the text using a regular expression (`/\s+/`) to calculate an accurate word count.
+  - Used by `quotes-display.js` to decide whether to render the quotation text as an inline `<q>` (short quotations) or block-level `<blockquote>` (long quotations).
+
+- `quotes-buttons.js`: Controls the interactive filtering behavior for the quotations list:
+  - Selects and caches key DOM elements: the list items (`.quote`), each quote’s filter buttons, and the "Clear filters" button.
   - Tracks which filter (author or tag) is currently active.
-  - Handles click events on quote buttons to apply or remove filters.
-    - Clicking a button shows only quotes containing that author or tag.
+  - Handles click events on quotation buttons to apply or remove filters.
+    - Clicking a button shows only quotations containing that author or tag.
     - Clicking the same button again resets the view.
   - Updates visual states:
-    - Highlights active filter buttons across all matching quotes.
+    - Highlights active filter buttons across all matching quotations.
     - Enables and styles the "Clear filters" button when a filter is active.
     - Disables and clears it when no filter is applied.
   - Uses simple helper functions:
-    - `applyFilter(selectedValue)` — hides non-matching quotes and updates button states.
-    - `filterInactive()` — resets all filters and restores the full quote list.
-- `details.js`: Handles `<details>` accessibility and behavior.
-  - Syncs `aria-expanded` between `<summary>` and `<details>`.
-  - Supports closing via the `Escape` key and restores focus.
+    - `applyFilter(selectedValue)` — hides non-matching quotations and updates button states.
+    - `filterInactive()` — resets all filters and restores the full quotations list.
 
 ### Other
 
 - `page-header-resize-observer.js`: Observes the `.header` element and updates the root’s `scroll-padding-top` based on header size and the `--skip-link-gap` CSS variable (in `base.css`), ensuring skip links and anchor targets scroll into view with proper spacing below a fixed or sticky header.
+
+- `details.js`: Handles `<details>` accessibility and behavior.
+
+  - Syncs `aria-expanded` between `<summary>` and `<details>`.
+  - Supports closing via the `Escape` key and restores focus.
+
 - `loader.js`: See [Loader Git repository](https://github.com/chrisnajman/loader)
+
 - `theme.js`: Handles theme toggling (light/dark mode) and local storage management.
 
 [Back to menu](#menu)
@@ -202,10 +215,12 @@ The JavaScript has been split into separate modules, improving code modularity:
 
 - ARIA attributes (`aria-expanded`) dynamically updated on all `<summary>` elements.
 - Escape key support: closes the open `<details>` and returns focus to its `<summary>`.
+- Quotations rendered as `<blockquote>` elements for longer text benefit assistive technologies by clearly indicating quoted or cited material. Screen readers announce them as quotations, improving semantic context.
+- The inline `<q>` element is retained for shorter quotations to ensure natural, readable inline flow while remaining accessible.
 
 ### No JS
 
-If JavaScript is disabled, a warning message is displayed and the loader animation, theme-toggler, quotes display and filtering cease to function.
+If JavaScript is disabled, a warning message is displayed and the loader animation, theme-toggler, quotations display and filtering cease to function.
 
 [Back to menu](#menu)
 

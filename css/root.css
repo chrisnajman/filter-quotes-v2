@@ -1,14 +1,16 @@
 :root {
+    /* Space between <header> and <main> when skip link is activated */
     --skip-link-gap: 4rem;
+
     overflow-y: scroll;
     color-scheme: light dark;
     --animation-timing: 250ms;
     --bold: 600;
     --border-radius: 1.25rem;
-    --shadow-colour: rgba(0, 0, 0, 0.2);
-    --shadow-right-bottom: 0.25rem 0.25rem 0.5rem var(--shadow-colour);
     --trim: trim-both cap alphabetic;
     --warning: red;
+    --shadow-top: 0 -0.25rem 0.375rem;
+    --shadow-bottom: 0 0.25rem 0.375rem;
 
     /* light mode (default) */
     --accent-neutral: #e4e4e4;
@@ -16,8 +18,8 @@
     --body-fg: #000;
     --el-bg: #fff;
     --accent-colour: blue;
-    --shadow-top: 0 -0.25rem 0.375rem var(--shadow-colour);
-    --shadow-bottom: 0 0.25rem 0.375rem var(--shadow-colour);
+    --shadow-colour: rgba(0, 0, 0, 0.2);
+    --blockquote: var(--accent-neutral);
 }
 
 .darkmode {
@@ -25,7 +27,7 @@
     --body-bg: var(--accent-neutral);
     --body-fg: #fff;
     --el-bg: #000;
-    --accent-colour: aqua;
-    --shadow-top: none;
-    --shadow-bottom: none;
+    --accent-colour: rgb(133, 207, 231);
+    --shadow-colour: rgba(0, 0, 0, 0.5);
+    --blockquote: var(--accent-neutral);
 }

@@ -38,9 +38,16 @@
         }
     }
 
-    & q {
+    & q,
+    & blockquote {
         font-family: Georgia, serif;
         font-size: clamp(1.25rem, 1.1495rem + 0.4673vw, 1.5rem);
+    }
+
+    & blockquote {
+        border-inline-start: 5px solid var(--blockquote);
+        padding-inline-start: 16px;
+        text-box: var(--trim);
     }
 
     button {
@@ -61,7 +68,7 @@
     }
 
     & .quote {
-        border-block-end: 0.0625rem dotted currentColor;
+        border-block-end: 0.0625rem dashed currentColor;
         padding-block: 1em;
 
         &:last-child {
