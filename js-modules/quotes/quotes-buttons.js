@@ -2,7 +2,7 @@ export default function quotesButtons() {
   // Cache references to important elements
   const clearFilters = document.getElementById("clear-filters")
   const lis = document.querySelectorAll(".quote")
-  const buttons = document.querySelectorAll(".quote button, .tag-cloud button")
+  const buttons = document.querySelectorAll(".quote button")
 
   // Track the currently active filter (null = no filter)
   let activeFilter = null
