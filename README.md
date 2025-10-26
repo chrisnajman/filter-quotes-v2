@@ -6,8 +6,9 @@
 - [Description](#description)
 - [Features](#features)
 - [JSON](#json)
-- [HTML `<template>`](#html-template)
+- [HTML `<template>`s](#html-templates)
 - [JavaScript](#javascript)
+- [No JS](#no-js)
 - [Accessibility](#accessibility)
 - [Theme Toggling](#theme-toggling)
 - [Testing and Compatibility](#testing-and-compatibility)
@@ -21,6 +22,12 @@
 A lightweight web app for browsing and filtering a collection of quotations by author or tag. Built with semantic HTML and modern vanilla JavaScript, it uses a JSON data source and an HTML `<template>` to generate the quotation list dynamically, with a focus on accessibility and clear structure.
 
 Longer entries are rendered as `<blockquote>` elements, while shorter ones use inline `<q>` tags for natural quotation formatting.
+
+- Includes an "All Authors and Tags" sidebar, listing every unique author and tag found in the JSON file.
+- Clicking any author or tag in the sidebar filters the quotations list using the same interactive logic as the buttons within individual quotations.
+- Sidebar panels close automatically when a selection is made.
+
+[ChatGPT add something here about "All authors and tags" sidebar]
 
 [View on GitHub Pages](https://chrisnajman.github.io/filter-quotations-v2)
 
@@ -42,6 +49,14 @@ Longer entries are rendered as `<blockquote>` elements, while shorter ones use i
 - Quotations of **25 words or fewer** are displayed using a `<q>` element (inline quotations).
 - Quotations **over 25 words** are displayed using a `<blockquote>` element (block-level quotations).
 - This enhances readability while maintaining semantic meaning.
+
+### All Authors and Tags Sidebar
+
+- Displays all authors and tags in a collapsible `<details>` panel on the side.
+- Buttons are generated dynamically from the JSON data.
+- Authors or tags that appear only once are **disabled** to indicate they cannot filter multiple quotations.
+- Clicking a sidebar button applies the same filter logic as quotation buttons and closes the panel automatically.
+- Buttons visually indicate the active filter.
 
 ### Details dropdown
 
@@ -107,11 +122,17 @@ Don't forget to separate entries with a comma, i.e.
 
 ---
 
-## HTML `<template>`
+## HTML `<template>`s
 
-The JSON entries are inserted into an HTML `<template>` via `quotes-display.js`.
+The JSON entries are inserted into HTML `<template>`s via `quotes-display.js`.
 
 The `<template>` element provides a reusable structure for each quotation, allowing the script to clone and populate it with data from the JSON file without repeating markup in the HTML.
+
+- The **All Authors and Tags** templates are populated dynamically from the JSON using `all-authors-display.js` and `all-tags-display.js`.
+- Unique authors and tags are converted into `<button>` elements and inserted into their respective `<template>` containers.
+- Buttons that appear only once are automatically disabled, and all buttons are sorted alphabetically with enabled buttons displayed first.
+
+### Quotations `<template>`
 
 ```html
 <template id="quote-template">
@@ -146,6 +167,23 @@ The `<template>` element provides a reusable structure for each quotation, allow
 </template>
 ```
 
+### All Authors and Tags `<template>`s
+
+```html
+<template id="all-authors-template">
+  <div
+    class="buttons"
+    data-all-authors
+  ></div>
+</template>
+<template id="all-tags-template">
+  <div
+    class="buttons"
+    data-all-tags
+  ></div>
+</template>
+```
+
 [Back to menu](#menu)
 
 ---
@@ -156,43 +194,27 @@ Built with **vanilla ES6 JavaScript**, focusing on modern syntax and browser API
 
 The JavaScript has been split into separate modules, improving code modularity:
 
-- `index.js`: Initializes the app using an asynchronous `init()` function.
+- `index.js`: Main entry point for the app.
 
-  - The function first **awaits `quotesDisplay()`**, which fetches the JSON file and renders the quotations dynamically from the `<template>`.
-  - Only after that process completes does it call `quotesButtons()`, ensuring that all quotation elements and filter buttons exist in the DOM before event listeners are attached.
-  - This sequence guarantees that filtering behavior is safely applied to dynamically generated content.
+  - Defines and immediately runs an asynchronous `init()` function that orchestrates fetching, rendering, and filtering quotations:
 
-- `quotes-display.js`: Handles fetching and displaying quotations from an external JSON file using the Fetch API.
+    - **`await getQuotesData()`** — fetches the JSON data and renders the quotations, also populating the sidebar.
+    - **`quotesButtons()`** — initializes filtering logic on quotation buttons and returns helper functions `applyFilter` and `filterInactive`.
+    - **`asideButtonFilters({ applyFilter, filterInactive })`** — connects sidebar author/tag buttons to the same filtering system.
 
-  - Retrieves `quotes.json` asynchronously and checks for a successful response.
-  - Clones the HTML `<template>` for each quotation, filling in quotation text, author, and tags.
-  - Depending on word count (determined via `word-count.js`), inserts the text into either a `<q>` or `<blockquote>` element.
-  - Gracefully handles missing data:
-    - Displays "Unknown" when the author field is empty.
-    - Hides the tags section if no tags exist.
-  - Dynamically creates `<button>` elements for each tag and appends them to the appropriate quotation.
-  - If there is only one instance of an **author** or **tag**, the `disabled` attribute is attached to its `<button>`.
-  - Outputs a message to the user (`#fail`) if data fails to load or the fetch request encounters an error.
-  - Completes rendering before the filtering logic (`quotes-buttons.js`) is executed.
+  - The four auxiliary functions — `themeSwitcher()`, `loadingAnimation()`, `details()`, and `pageHeaderResizeObserver()` — are called beforehand to set up global behaviors.
 
-- `word-count.js`: Counts the number of words in a given string.
+- `quotes-get-data.js`: Fetches the JSON quotations file, passes the data to` quotes-display.js` to render the list, runs `quotes-buttons-count.js` to disable singleton buttons, and populates the sidebar via - `all-authors-display.js`, `all-tags-display.js`, and `all-authors-tags-buttons.js`.
+- `quotes-display.js`: Clones the quotation template for each JSON entry, inserts quote text, pre/post-quote text, author, and tags. Short quotes use `<q>`; long quotes use `<blockquote>`. Handles missing authors/tags gracefully.
+- `quotes-buttons.js`: Adds interactive filtering to quotation buttons and the "Clear filters" button. Tracks active filters, updates visibility of quotations, and highlights active buttons. Exports `applyFilter` and `filterInactive` for reuse by sidebar buttons.
+- `quotes-buttons-count.js`: Counts occurrences of each author/tag button and disables buttons that appear only once.
 
-  - Exports a simple function that trims whitespace and splits the text using a regular expression (`/\s+/`) to calculate an accurate word count.
-  - Used by `quotes-display.js` to decide whether to render the quotation text as an inline `<q>` (short quotations) or block-level `<blockquote>` (long quotations).
+- `all-authors-display.js`: Populates the "All Authors" sidebar panel with unique authors from JSON.
+- `all-tags-display.js`: Populates the "All Tags" sidebar panel with unique tags from JSON.
+- `all-authors-tags-buttons.js`: Applies sorting and disables singleton buttons in the sidebar panels.
+- `all-authors-tags-button-filters.js`: Connects sidebar buttons to the filtering logic in `quotes-buttons.j`s. Clicking a sidebar button applies a filter and closes the panel.
 
-- `quotes-buttons.js`: Controls the interactive filtering behavior for the quotations list:
-  - Selects and caches key DOM elements: the list items (`.quote`), each quote’s filter buttons, and the "Clear filters" button.
-  - Tracks which filter (author or tag) is currently active.
-  - Handles click events on quotation buttons to apply or remove filters.
-    - Clicking a button shows only quotations containing that author or tag.
-    - Clicking the same button again resets the view.
-  - Updates visual states:
-    - Highlights active filter buttons across all matching quotations.
-    - Enables and styles the "Clear filters" button when a filter is active.
-    - Disables and clears it when no filter is applied.
-  - Uses simple helper functions:
-    - `applyFilter(selectedValue)` — hides non-matching quotations and updates button states.
-    - `filterInactive()` — resets all filters and restores the full quotations list.
+- `utils.js`: Contains helper functions for counting occurrences, disabling singleton buttons, sorting, creating buttons from arrays, and calculating word count for quote formatting.
 
 ### Other
 
@@ -206,6 +228,79 @@ The JavaScript has been split into separate modules, improving code modularity:
 - `loader.js`: See [Loader Git repository](https://github.com/chrisnajman/loader)
 
 - `theme.js`: Handles theme toggling (light/dark mode) and local storage management.
+
+[Back to menu](#menu)
+
+---
+
+## No JS
+
+If JavaScript is disabled, a warning message is displayed to the user.
+
+The `no-js` class provides a simple fallback mechanism that lets you adjust styles and messages when JavaScript is unavailable.
+
+### How it Works
+
+#### HTML
+
+```html
+<!DOCTYPE html>
+<html
+  lang="en"
+  class="no-js"
+>
+  <head>
+    <!-- If JavaScript IS enabled, remove the 'no-js' class from <html> tag -->
+    <script>
+      document.documentElement.classList.remove("no-js")
+    </script>
+
+    <!-- Rest of <head> items -->
+  </head>
+
+  <body>
+    <!-- <body> content -->
+    <noscript class="container">
+      <p>
+        JavaScript must be enabled for the quotations to display and the
+        filtering to work.
+      </p>
+    </noscript>
+    <!-- <body> content -->
+  </body>
+</html>
+```
+
+#### CSS
+
+`no-js.css`:
+
+```css
+.no-js {
+  & .theme-toggler,
+  & .details-container,
+  & .quotes-container .btn-clear-filters,
+  & .authors-tags,
+  & .loader,
+  & .loader::after {
+    display: none;
+  }
+}
+
+noscript p {
+  width: fit-content;
+  margin-inline: auto;
+  border: 0.1875rem solid var(--warning);
+  background-color: var(--body-fg);
+  color: var(--el-bg);
+  padding: 1em 1.5em;
+  border-radius: 0.75rem;
+  text-align: center;
+  text-wrap: balance;
+}
+```
+
+In general, add any elements you want hidden inside the `.no-js { ... }` block.
 
 [Back to menu](#menu)
 

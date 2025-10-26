@@ -1,0 +1,65 @@
+/** All buttons for quotations list and taglist **/
+.main {
+    & button {
+        all: unset;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: 0.125rem solid orange;
+            outline-offset: 0.1875rem;
+        }
+
+        &.btn-clear-filters {
+            border: 0.125rem solid currentColor;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 100vw;
+            display: block;
+            margin-inline: auto;
+
+            &:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                border-color: #ccc;
+            }
+
+            &.active {
+                background-color: var(--accent-colour);
+                color: var(--el-bg);
+            }
+        }
+    }
+}
+
+.buttons {
+    & button {
+        color: var(--accent-colour);
+        padding: 0.125rem;
+        font-weight: 400;
+        border-block-end: 0.0625rem solid transparent;
+
+        &.active {
+            border-block-end-color: var(--accent-colour);
+        }
+
+        &::after {
+            content: ",";
+        }
+
+        &:last-of-type::after {
+            content: "";
+        }
+
+        &:disabled {
+            pointer-events: none;
+            color: var(--body-fg);
+            opacity: 1;
+        }
+    }
+}
+
+@media (hover: hover) {
+    .buttons button:hover {
+        border-block-end-color: var(--accent-colour);
+    }
+}

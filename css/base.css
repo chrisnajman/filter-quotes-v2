@@ -75,6 +75,11 @@ h3 {
     font-weight: var(--bold);
 }
 
+h4 {
+    font-size: inherit;
+    font-weight: var(--bold);
+}
+
 img {
     max-width: 100%;
     height: auto;
@@ -179,10 +184,14 @@ code {
 }
 
 .main {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
     padding-block: 2rem 5rem;
+
+    @media screen and (width < 31.25rem) {
+        padding-block-start: 4rem;
+    }
 
     /* temp style */
     & h1 + p {

@@ -2,6 +2,7 @@
     & .theme-toggler,
     & .details-container,
     & .quotes-container .btn-clear-filters,
+    & .authors-tags,
     & .loader,
     & .loader::after {
         display: none;

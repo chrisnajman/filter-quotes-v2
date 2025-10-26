@@ -11,6 +11,7 @@
     --warning: red;
     --shadow-top: 0 -0.25rem 0.375rem;
     --shadow-bottom: 0 0.25rem 0.375rem;
+    --shadow-left-bottom: -0.25rem 0.25rem 0.5rem;
 
     /* light mode (default) */
     --accent-neutral: #e4e4e4;
@@ -30,4 +31,17 @@
     --accent-colour: rgb(133, 207, 231);
     --shadow-colour: rgba(0, 0, 0, 0.5);
     --blockquote: var(--accent-neutral);
+}
+
+/* Automatic dark mode based on system preference */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --accent-neutral: #4d4c4c;
+        --body-bg: var(--accent-neutral);
+        --body-fg: #fff;
+        --el-bg: #000;
+        --accent-colour: rgb(133, 207, 231);
+        --shadow-colour: rgba(0, 0, 0, 0.5);
+        --blockquote: var(--accent-neutral);
+    }
 }

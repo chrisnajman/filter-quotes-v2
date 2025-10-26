@@ -7,7 +7,7 @@
     "tags": ["Gustave Moreau", "Art"]
   },
   {
-    "prequote": "Karl Popper accused Wittgenstein of",
+    "prequote": "Karl Popper accused Wittgenstein of:",
     "quote": "being a man eternally polishing his spectacles without ever looking through them.",
     "postquote": "",
     "author": "Popper",
@@ -103,5 +103,12 @@
     "postquote": "",
     "author": "C.S. Lewis",
     "tags": ["Writing", "Fantasy", "Tyranny", "Oppression"]
+  },
+  {
+    "prequote": "",
+    "quote": "This world is a comedy to those that think, a tragedy to those that feel.",
+    "postquote": "",
+    "author": "Horace Walpole",
+    "tags": ["Tragedy", "Comedy"]
   }
 ]

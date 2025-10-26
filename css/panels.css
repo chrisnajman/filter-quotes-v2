@@ -1,0 +1,5 @@
+.panel {
+    padding: 1rem 2rem 0.5rem;
+    border-radius: 1rem;
+    background-color: var(--el-bg);
+}

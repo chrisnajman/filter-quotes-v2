@@ -12,7 +12,7 @@
 
     & ul {
         list-style-type: disc;
-        padding: 1.5rem 2em;
+        padding: 0.5rem 2em 1.5em;
         background-color: var(--el-bg);
         border-radius: 1rem;
 
@@ -36,6 +36,10 @@ details {
         cursor: pointer;
         white-space: nowrap;
         padding-block-end: 0.5em;
+    }
+
+    & .details-content {
+        padding-block-end: 1rem;
     }
 }
 
