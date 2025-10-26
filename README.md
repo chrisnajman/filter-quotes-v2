@@ -27,8 +27,6 @@ Longer entries are rendered as `<blockquote>` elements, while shorter ones use i
 - Clicking any author or tag in the sidebar filters the quotations list using the same interactive logic as the buttons within individual quotations.
 - Sidebar panels close automatically when a selection is made.
 
-[ChatGPT add something here about "All authors and tags" sidebar]
-
 [View on GitHub Pages](https://chrisnajman.github.io/filter-quotations-v2)
 
 [Back to menu](#menu)
